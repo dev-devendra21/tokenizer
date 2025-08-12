@@ -110,6 +110,22 @@ Hello World
 
 ---
 
+## 📸 Screenshots
+
+### Home Interface
+
+![Home Interface](public/assets/Screenshot_2.png)
+
+### Encoding Example
+
+![Encoding Example](public/assets/Screenshot_3.png)
+
+### Decoding Example
+
+![Decoding Example](public/assets/Screenshot_1.png)
+
+---
+
 ## 📜 License
 
 MIT License. Free to use and modify.
