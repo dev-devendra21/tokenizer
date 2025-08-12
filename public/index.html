@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tokenizer Tool 🔍</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+      button {
+        margin: 5px 0;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tokenizer Tool 🔍</h1>
+
+    <h3>Encode Text → Tokens</h3>
+    <textarea id="textInput" placeholder="Enter text..."></textarea>
+    <button onclick="encodeText()">Encode</button>
+    <pre id="encodeOutput"></pre>
+
+    <h3>Decode Tokens → Text</h3>
+    <textarea
+      id="tokenInput"
+      placeholder="Enter token IDs (comma separated)..."
+    ></textarea>
+    <button onclick="decodeTokens()">Decode</button>
+    <pre id="decodeOutput"></pre>
+
+    <script>
+      async function encodeText() {
+        const text = document.getElementById("textInput").value;
+        const res = await fetch("/encode", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        const data = await res.json();
+        document.getElementById("encodeOutput").textContent = JSON.stringify(
+          data.tokens
+        );
+      }
+
+      async function decodeTokens() {
+        const tokenIds = document
+          .getElementById("tokenInput")
+          .value.split(",")
+          .map((id) => parseInt(id.trim()))
+          .filter((id) => !isNaN(id));
+
+        const res = await fetch("/decode", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tokenIds }),
+        });
+        const data = await res.json();
+        document.getElementById("decodeOutput").textContent = data.text;
+      }
+    </script>
+  </body>
+</html>
