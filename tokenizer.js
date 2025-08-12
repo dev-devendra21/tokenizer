@@ -17,7 +17,7 @@ class Tokenizer {
           Object.entries(this.vocab).map(([word, id]) => [id, word])
         );
       } catch (e) {
-        console.error("Error reading vocab file:", e);
+        console.error("Error reading vocab file as there is no data.");
         this.vocab = {};
         this.reverseVocab = {};
       }
