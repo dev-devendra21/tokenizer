@@ -81,25 +81,25 @@ http://localhost:3000
 **Input (Text → Tokens):**
 
 ```
-Hello World
+hello world
 ```
 
 **Output:**
 
 ```
-[100, 101]
+[532, 552]
 ```
 
 **Input (Tokens → Text):**
 
 ```
-100, 101
+552, 532
 ```
 
 **Output:**
 
 ```
-Hello World
+world hello
 ```
 
 ---

@@ -6,6 +6,7 @@ class Tokenizer {
     this.vocab = {};
     this.reverseVocab = {};
     this.loadVocab();
+    this.textEncoder = new TextEncoder();
   }
 
   loadVocab() {
@@ -34,10 +35,15 @@ class Tokenizer {
     );
   }
 
-  getNextTokenId() {
-    if (Object.keys(this.vocab).length === 0) return 100;
-    const maxId = Math.max(...Object.values(this.vocab));
-    return maxId + 1;
+  generateTokenIdFromWord(word) {
+    if (word === "") return 1;
+
+    const bytes = this.textEncoder.encode(word);
+    let sum = 0;
+    for (const b of bytes) {
+      sum += b;
+    }
+    return sum;
   }
 
   encode(text) {
@@ -46,7 +52,15 @@ class Tokenizer {
 
     for (const word of words) {
       if (!this.vocab[word]) {
-        const newId = this.getNextTokenId();
+        let newId = this.generateTokenIdFromWord(word);
+
+        while (
+          this.reverseVocab[newId] !== undefined &&
+          this.reverseVocab[newId] !== word
+        ) {
+          newId += 1;
+        }
+
         this.vocab[word] = newId;
         this.reverseVocab[newId] = word;
         this.saveVocab();
